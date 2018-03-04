@@ -31,7 +31,8 @@ public class StepDefinitions {
 	public void before(){
 		loadProps();
 		//RestAssured.baseURI = Coalesce(RestAssured.baseURI , props.getProperty("BASE_URI"));
-		RestAssured.baseURI = props.getProperty("BASE_URI");
+		//RestAssured.baseURI = props.getProperty("BASE_URI");
+		RestAssured.baseURI = System.getenv("BASE_URI");
 		if(rspec==null)rspec = RestAssured.requestSpecification;
 	}
 	
