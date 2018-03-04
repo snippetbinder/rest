@@ -5,6 +5,7 @@ package api.testrunner;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.RestAssured;
@@ -28,12 +29,18 @@ public class StepDefinitions {
 	
 	
 	@Before
-	public void before(){
-		loadProps();
+	public void before(Scenario scenario){
+		System.out.println("--------Start Scenario-------" + scenario.getName());
+		//loadProps();
 		//RestAssured.baseURI = Coalesce(RestAssured.baseURI , props.getProperty("BASE_URI"));
 		//RestAssured.baseURI = props.getProperty("BASE_URI");
-		RestAssured.baseURI = System.getenv("BASE_URI");
-		if(rspec==null)rspec = RestAssured.requestSpecification;
+//		RestAssured.baseURI = System.getenv("BASE_URI");
+		rspec = RestAssured.given().baseUri(System.getenv("BASE_URI"));
+	}
+	
+	@After
+	public void after(Scenario scenario) {
+		System.out.println("--------End Scenario-------" + scenario.getName());
 	}
 	
 	//utility method...to be public
@@ -115,7 +122,8 @@ public class StepDefinitions {
 	    json.put("deletionDate", "");
 	    json.put("billableEntity", "GC00000101M1");
 	    
-	    rspec.body(json.toString());
+	    rspec.body(json.toString()).log().all();
+	    
 	}
 
 	@When("^user sends the request to Trading Partner Relations API$")
