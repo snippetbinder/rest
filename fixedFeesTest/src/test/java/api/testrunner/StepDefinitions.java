@@ -11,6 +11,12 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,11 +24,13 @@ public class StepDefinitions {
 
 	public static RequestSpecification rspec;
 	Response response;
+	Properties props;
 	
 	
 	@Before
 	public void before(){
-		RestAssured.baseURI = Coalesce(RestAssured.baseURI , System.getenv("BASE_URI"));
+		loadProps();
+		RestAssured.baseURI = Coalesce(RestAssured.baseURI , props.getProperty("BASE_URI"));
 		rspec = RestAssured.requestSpecification;
 	}
 	
@@ -32,7 +40,15 @@ public class StepDefinitions {
 		return (param!=null && param.toString().trim()!="")? param : param1;
 	}
 	
-	@After
+	private void loadProps(){
+		try {
+			File file = new File("config.properties");
+			InputStream ins = new FileInputStream(file);
+			props.load(ins);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	@Given("^A request for FixedFees API with all correct headers$")
