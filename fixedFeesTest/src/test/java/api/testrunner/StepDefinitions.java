@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 public class StepDefinitions {
 
-	public static RequestSpecification rspec;
+	public RequestSpecification rspec;
 	Response response;
 	Properties props;
 	
