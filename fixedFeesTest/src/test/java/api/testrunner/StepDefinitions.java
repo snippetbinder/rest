@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 public class StepDefinitions {
 
-	public RequestSpecification rspec;
+	public static RequestSpecification rspec;
 	Response response;
 	Properties props;
 	
@@ -97,7 +97,7 @@ public class StepDefinitions {
 	@Given("^A request for TradingPartnerRelations API with all correct headers$")
 	public void a_request_for_TradingPartnerRelations_API_with_all_correct_headers() throws Throwable {
 		
-		rspec = RestAssured.given().header("x-ottg-caller-application","postman").
+		rspec.given().header("x-ottg-caller-application","postman").
 				header("x-ottg-im-principal-type","USER_SESSION").header("x-ottg-im-community-id","GCM69516").
 				header("x-ottg-caller-application-host","localhost").header("x-ottg-principal-orgid","GC10524412CU").
 				header("x-ottg-principal-serviceid","929877").header("Content-Type","application/json").
@@ -137,7 +137,7 @@ public class StepDefinitions {
 	@Given("^A request for Fixed Fees API to assign fixed fees for BU with all correct headers$")
 	public void a_request_for_Fixed_Fees_API_to_assign_fixed_fees_for_BU_with_all_correct_headers() throws Throwable {
 		
-		rspec = RestAssured.given().header("x-ottg-caller-application","postman").
+		rspec.given().header("x-ottg-caller-application","postman").
 		header("x-ottg-im-principal-type","USER_SESSION").header("x-ottg-im-community-id","GCM69516").
 		header("x-ottg-caller-application-host","localhost").header("x-ottg-principal-orgid","GC10524412CU").
 		header("x-ottg-principal-serviceid","929877").header("Content-Type","application/json").
