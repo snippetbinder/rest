@@ -30,20 +30,22 @@ public class StepDefinitions {
 	@Before
 	public void before(){
 		loadProps();
-		RestAssured.baseURI = Coalesce(RestAssured.baseURI , props.getProperty("BASE_URI"));
-		rspec = RestAssured.requestSpecification;
+		//RestAssured.baseURI = Coalesce(RestAssured.baseURI , props.getProperty("BASE_URI"));
+		RestAssured.baseURI = props.getProperty("BASE_URI");
+		if(rspec==null)rspec = RestAssured.requestSpecification;
 	}
 	
 	//utility method...to be public
 	private static <T> T Coalesce(T param, T param1)
 	{
-		return (param!=null && param.toString().trim()!="")? param : param1;
+		return (param!=null && param.toString().trim()!="" && param.toString().trim()!="http://localhost")? param : param1;
 	}
 	
 	private void loadProps(){
 		try {
-			File file = new File("config.properties");
-			InputStream ins = new FileInputStream(file);
+			props = new Properties();
+			//File file = new File("src/test/resources/config.properties");
+			FileInputStream ins = new FileInputStream("src/test/resources/config.properties");
 			props.load(ins);
 		} catch (Exception e) {
 			e.printStackTrace();
