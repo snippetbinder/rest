@@ -67,6 +67,7 @@
 				<configuration>
 					<includes>
 						<include>${maven.surefire.include}</include>
+						<include>**\*TestRunner.java</include>
 					</includes>
 				</configuration>
 			</plugin>
